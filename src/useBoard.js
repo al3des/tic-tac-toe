@@ -24,7 +24,7 @@ function useBoard() {
           }
           return {
             ...state,  
-            board:  state.history[state.moves -1],
+            board:  state.history[state.history.length -1],
             isXNext: !state.isXNext,
             moves: state.moves -1,
             history: state.history.slice(0, state.moves)
