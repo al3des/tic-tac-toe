@@ -1,37 +1,21 @@
-import React, { useContext } from "react"
-import BoardContext from "../BoardContext"
-import useHistory from "../useHistory"
+import React from "react"
+import useBoard from "../useBoard"
 
 import Square from "./Square"
 
 export default function Board() {
-  let { board, setBoard, isXNext, setIsXNext, moves, setMoves } = useContext(
-    BoardContext
-  )
-  let [history, dispatchHistory] = useHistory()
+
+  let [state, dispatchBoard] = useBoard()
+  let { board, isXNext} = state
+console.log(state)
   function makeMove(i) {
-    setBoard(
-      board.map((square, index) => {
-        if (index === i && !square) {
-          return isXNext ? "X" : "O"
-        }
-        return square
-      })
-    )
-    dispatchHistory({ type: "SAVE_HISTORY", board })
-    console.log("history", history)
-    setIsXNext(!isXNext)
-    setMoves(moves + 1)
+    dispatchBoard({type: "MAKE_MOVE", i, board})
   }
-  function goTo(step) {
-    if (step > moves || step < 0) {
-      return
-    }
-    setBoard(history[step + 1])
-    dispatchHistory({ type: "RESET_TO_MOVE", moves })
-    setIsXNext(!isXNext)
-    setMoves(step)
+
+  function goBack() {
+     dispatchBoard({type: "GO_BACK"})
   }
+
   function renderSquares(board) {
     return board.map((square, index) => (
       <div
@@ -57,7 +41,7 @@ export default function Board() {
       <div style={{ display: "flex", flexWrap: "wrap", width: "200px" }}>
         {renderSquares(board)}
         <div>
-          <button onClick={() => goTo(moves - 1)}>go back</button>
+          <button onClick={() => goBack()}>go back</button>
         </div>
       </div>
     </div>
