@@ -7,13 +7,13 @@ export default function Board() {
 
   let [state, dispatchBoard] = useBoard()
   let { board, isXNext} = state
-
+console.log(state)
   function makeMove(i) {
     dispatchBoard({type: "MAKE_MOVE", i, board})
   }
 
   function goBack() {
-   dispatchBoard({type: "GO_BACK"})
+     dispatchBoard({type: "GO_BACK"})
   }
 
   function renderSquares(board) {

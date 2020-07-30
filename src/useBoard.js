@@ -19,7 +19,7 @@ function useBoard() {
             moves: state.moves +1
         }
         case "GO_BACK":
-          if (state.moves < 1) {
+          if (state.moves === 0) {
             return state
           }
           return {
@@ -27,7 +27,7 @@ function useBoard() {
             board:  state.history[state.history.length -1],
             isXNext: !state.isXNext,
             moves: state.moves -1,
-            history: state.history.slice(0, state.moves)
+            history: state.history.slice(0, state.moves -1)
           }
           
           default:
